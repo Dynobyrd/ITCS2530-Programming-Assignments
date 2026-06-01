@@ -1,31 +1,112 @@
-// ITCS 2530 - Week 01 Assignment
+// ITCS 2530 - Week 02 Assignment
 // Deven Shumney
 
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 using namespace std;
 
 int main()
 {
     // Define variables
-    string favHerb;
-    string favCarn;
-    string dinoRide;
+    int actMovies = 7;
+    int movieDiff;
+    int dinoMovies;
+    char dinoFeat;
+    string actFeat;
+    string dinoSound;
+    ofstream outFile;
 
-    // Display prompts and request user input
-    cout << "Let's talk about dinosaurs!" << endl << endl;
+    // Introduction
+    cout << "Welcome to the Dinosaur Directory!" << endl << endl;
 
-    cout << "What is your favorite dinosaur that eats plants?" << endl;
-    cin >> favHerb;
-    cout << "\nWhat is your favorite dinosaur that eats meat?" << endl;
-    cin >> favCarn;
-    cout << "\nIf you could ride on the back of any dinosaur, what would it be?" << endl;
-    cin >> dinoRide;
+    // Display prompts and request user input, handle invalid input once per
+    cout << "How many movies are there in the \"Jurassic Park\" series?" << endl;
+    cin >> dinoMovies;
 
-    // Display paragraph with user-defined strings
-    cout << "\nYour favorite herbivore appears to be the " << favHerb << ". That's awesome!" << endl;
-    cout << "On the topic of carnivores, you like " << favCarn << ". I wouldn't want to run into that guy!" << endl;
-    cout << "I'm picturing you saddled on top of a " << dinoRide << " now and it sounds like a blast!" << endl;
-    cout << "Imagine trying to befriend and ride a " << favCarn << "...no thank you! I'll keep my limbs!" << endl;
+    if (dinoMovies <= 0) {
+
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << endl << "Please enter a number > 0." << endl;
+        cin >> dinoMovies;
+    }
+
+    cout << endl << "Choose the coolest dinosaur feature: Teeth (T), Feathers (F), Horns (H)" << endl;
+    cin >> dinoFeat;
+
+    if ((dinoFeat != 'T') && (dinoFeat != 'F') && (dinoFeat != 'H')) {
+
+        cin.clear();
+        cin.ignore(100, '\n');
+        cout << endl << "Invalid response! Please choose from the features above. *CASE SENSITIVE*" << endl;
+        cin >> dinoFeat;
+    }
+
+    cout << endl << "Type out how you think a dinosaur sounds!" << endl;
+    cin >> dinoSound;
+
+    if (dinoSound == "rawr") {
+
+        cout << endl << "Oh, come now...I know you can do better than that! Try it again!" << endl;
+        cin >> dinoSound;
+    }
+
+    // Calculate difference between movie guess and actual movies
+    if (dinoMovies > actMovies) {
+
+        movieDiff = dinoMovies - actMovies;
+    }
+    else {
+
+        movieDiff = actMovies - dinoMovies;
+    }
+
+    // Calculate feature from user input
+    if (dinoFeat == 'T') {
+
+        actFeat = "Teeth";
+    }
+    else if (dinoFeat == 'F') {
+
+        actFeat = "Feathers";
+    }
+    else if (dinoFeat == 'H') {
+
+        actFeat = "Horns";
+    }
+    else {
+
+        actFeat = "???";
+    }
+
+    // Summary table window output
+    cout << "\n------------------------------------------\n";
+    cout << "              RESPONSE SUMMARY           \n";
+    cout << "------------------------------------------\n";
+
+    cout << left << setw(16) << "Movies Guessed:" << dinoMovies << endl;
+    cout << left << setw(30) << "Guess Difference from Actual:" << movieDiff << endl;
+    cout << left << setw(22) << "Coolest Dino Feature:" << actFeat << endl;
+    cout << left << setw(16) << "Dinosaur Sound:" << dinoSound << endl;
+
+    cout << "------------------------------------------" << endl;
+
+    // Summary table file output
+    outFile.open("report.txt");
+
+    outFile << "------------------------------------------\n";
+    outFile << "              RESPONSE SUMMARY           \n";
+    outFile << "------------------------------------------\n";
+
+    outFile << left << setw(16) << "Movies Guessed:" << dinoMovies << endl;
+    outFile << left << setw(30) << "Guess Difference from Actual:" << movieDiff << endl;
+    outFile << left << setw(22) << "Coolest Dino Feature:" << actFeat << endl;
+    outFile << left << setw(16) << "Dinosaur Sound:" << dinoSound << endl;
+
+    outFile << "------------------------------------------" << endl;
+
+    outFile.close();
 
     return 0;
 }
