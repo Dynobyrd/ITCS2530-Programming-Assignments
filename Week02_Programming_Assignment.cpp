@@ -1,4 +1,4 @@
-// ITCS 2530 - Week 02 Assignment
+// ITCS 2530 - Week 03 Assignment
 // Deven Shumney
 
 #include <iostream>
@@ -42,14 +42,21 @@ int main()
         cout << endl << "Invalid response! Please choose from the features above. *CASE SENSITIVE*" << endl;
         cin >> dinoFeat;
     }
+    else {
+
+        cout << endl << "I think that's a really awesome feature too!" << endl;
+    }
 
     cout << endl << "Type out how you think a dinosaur sounds!" << endl;
     cin >> dinoSound;
 
-    if (dinoSound == "rawr") {
+    if ((dinoSound == "rawr") || (dinoSound == "roar")) {
 
         cout << endl << "Oh, come now...I know you can do better than that! Try it again!" << endl;
         cin >> dinoSound;
+    }
+    else {
+        cout << endl << "Oh, how ravenous!" << endl;
     }
 
     // Calculate difference between movie guess and actual movies
@@ -62,21 +69,21 @@ int main()
         movieDiff = actMovies - dinoMovies;
     }
 
-    // Calculate feature from user input
-    if (dinoFeat == 'T') {
-
+    // Calculate feature from user input using switch statement
+    switch (dinoFeat) {
+    case 'T':
         actFeat = "Teeth";
-    }
-    else if (dinoFeat == 'F') {
+        break;
 
+    case 'F':
         actFeat = "Feathers";
-    }
-    else if (dinoFeat == 'H') {
+        break;
 
+    case 'H':
         actFeat = "Horns";
-    }
-    else {
+        break;
 
+    default:
         actFeat = "???";
     }
 
