@@ -1,4 +1,4 @@
-// ITCS 2530 - Week 03 Assignment
+// ITCS 2530 - Week 04 Assignment
 // Deven Shumney
 
 #include <iostream>
@@ -20,11 +20,12 @@ int main()
     // Introduction
     cout << "Welcome to the Dinosaur Directory!" << endl << endl;
 
-    // Display prompts and request user input, handle invalid input once per
+    // Display prompts and request user input, handle invalid input
+    // Jurassic Park movies ~ while
     cout << "How many movies are there in the \"Jurassic Park\" series?" << endl;
     cin >> dinoMovies;
 
-    if (dinoMovies <= 0) {
+    while (dinoMovies <= 0) {
 
         cin.clear();
         cin.ignore(100, '\n');
@@ -32,21 +33,25 @@ int main()
         cin >> dinoMovies;
     }
 
-    cout << endl << "Choose the coolest dinosaur feature: Teeth (T), Feathers (F), Horns (H)" << endl;
-    cin >> dinoFeat;
+    cout << endl << "Find out how close you were at the end!" << endl;
 
-    if ((dinoFeat != 'T') && (dinoFeat != 'F') && (dinoFeat != 'H')) {
+    // Dinosaur features ~ do-while
+    do {
 
-        cin.clear();
-        cin.ignore(100, '\n');
-        cout << endl << "Invalid response! Please choose from the features above. *CASE SENSITIVE*" << endl;
+        cout << endl << "Choose the coolest dinosaur feature: Teeth (T), Feathers (F), Horns (H)" << endl;
         cin >> dinoFeat;
-    }
-    else {
 
-        cout << endl << "I think that's a really awesome feature too!" << endl;
-    }
+        if ((dinoFeat != 'T') && (dinoFeat != 'F') && (dinoFeat != 'H')) {
 
+            cin.clear();
+            cin.ignore(100, '\n');
+            cout << endl << "Invalid response! Please choose from the features above. *CASE SENSITIVE*" << endl;
+        }
+    } while ((dinoFeat != 'T') && (dinoFeat != 'F') && (dinoFeat != 'H'));
+
+    cout << endl << "I think that's a really awesome feature too!" << endl;
+
+    // Dinosaur sounds ~ for
     cout << endl << "Type out how you think a dinosaur sounds!" << endl;
     cin >> dinoSound;
 
@@ -58,6 +63,13 @@ int main()
     else {
         cout << endl << "Oh, how ravenous!" << endl;
     }
+
+    for (int i = 0; i <= 2; i++) {
+
+        cout << dinoSound << " ";
+    }
+
+    cout << endl << "AHHHHH, that's horrifying!" << endl;
 
     // Calculate difference between movie guess and actual movies
     if (dinoMovies > actMovies) {
