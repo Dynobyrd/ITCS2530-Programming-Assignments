@@ -3,6 +3,6 @@
 ------------------------------------------
 Movies Guessed: 20
 Guess Difference from Actual: 13
-Coolest Dino Feature: Feathers
-Dinosaur Sound: AOOOOOWWW
+Coolest Dino Feature: Teeth
+Dinosaur Sound: aooooo
 ------------------------------------------

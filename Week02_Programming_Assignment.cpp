@@ -36,9 +36,9 @@ int main()
     cout << endl << "Find out how close you were at the end!" << endl;
 
     // Dinosaur features ~ do-while
+    cout << endl << "Choose the coolest dinosaur feature: Teeth (T), Feathers (F), Horns (H)" << endl;
     do {
 
-        cout << endl << "Choose the coolest dinosaur feature: Teeth (T), Feathers (F), Horns (H)" << endl;
         cin >> dinoFeat;
 
         if ((dinoFeat != 'T') && (dinoFeat != 'F') && (dinoFeat != 'H')) {
