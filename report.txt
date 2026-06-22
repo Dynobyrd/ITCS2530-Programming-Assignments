@@ -1,8 +1,8 @@
 ------------------------------------------
               RESPONSE SUMMARY           
 ------------------------------------------
-Movies Guessed: 20
-Guess Difference from Actual: 13
-Coolest Dino Feature: Teeth
-Dinosaur Sound: aooooo
+Movies Guessed: 64
+Guess Difference from Actual: 57
+Coolest Dino Feature: Horns
+Dinosaur Sound: aaaaggggaa
 ------------------------------------------
