@@ -1,6 +1,23 @@
-// ITCS 2530 - Week 08 Assignment
-// Deven Shumney
-// Andy Rizo
+/* 
+ITCS 2530 - Week 08 Assignment
+Deven Shumney
+Andy Rizo
+
+
+Define a class that represents your overall tracker/manager for the hobby.
+
+    At least one private data member that stores:
+
+    An array of your struct type (e.g., Session sessions[7];), or Other meaningful data such as counts, totals, etc.
+
+    At least one constructor which initializes the object to a safe starting state.
+
+    At least three public member functions.
+    
+    You may move some of the already present functions into the class as member functions.
+
+*/ 
+
 
 #include <iostream>
 #include <iomanip>
@@ -15,7 +32,7 @@ enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT };
 //Structs
 struct userData {
 
-    int movieAmountGuessed; // For the guess how many movies there are. // 
+    int movieAmountGuessed; // For the guess how many movies there are.
 
     string favoriteDinoFeature;
 
