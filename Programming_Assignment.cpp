@@ -1,6 +1,6 @@
 // ITCS 2530 - Week 07 Assignment
 // Deven Shumney
-// Andy Rizo (Introduced Enums and Arrays + added a new minigame)
+// Andy Rizo (Introduced Structs)
 
 #include <iostream>
 #include <iomanip>
