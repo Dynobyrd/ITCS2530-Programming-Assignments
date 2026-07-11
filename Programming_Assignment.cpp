@@ -1,6 +1,6 @@
-// ITCS 2530 - Week 07 Assignment
+// ITCS 2530 - Week 08 Assignment
 // Deven Shumney
-// Andy Rizo (Introduced Structs)
+// Andy Rizo
 
 #include <iostream>
 #include <iomanip>
@@ -10,6 +10,7 @@ using namespace std;
 
 // Enums
 enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT };
+
 
 //Structs
 struct userData {
@@ -23,7 +24,6 @@ struct userData {
     int movieMinigameScore; // For the higher/lower game.
 
 };
-
 
 // Defined functions 
 
@@ -48,7 +48,7 @@ int ratingGame(string movies[], int ratings[], int size)
     cout << endl;
 
 
-    for (int i = 0; i < size - 1; i++)  //This loop will run 6 times in total
+    for (int i = 0; i < size - 1; i++)  //This loop will run 6 times in total unless more array entries are added.
     {
         cout << "Does ";
 
@@ -70,7 +70,7 @@ int ratingGame(string movies[], int ratings[], int size)
         cout << "Rating to go off of: " << ratings[i] << "/100";
         changeColor(15);
 
-        do // Do while Error Handler
+        do // Do while to check for invalid inputs.
         {
             cout << endl;
             cout << endl;
@@ -89,7 +89,7 @@ int ratingGame(string movies[], int ratings[], int size)
         bool correct = false; // From here we check the user input to see if its correct or wrong
 
 
-        if (ratings[i + 1] > ratings[i]) 
+        if (ratings[i + 1] > ratings[i]) //This if else checks to see if one movie has a higher rating than the other and if the user input is correct for either.
         {
             if ((answer == "Higher") || (answer == "higher")) 
             {
@@ -104,7 +104,7 @@ int ratingGame(string movies[], int ratings[], int size)
             }
         }
 
-        if (correct) //Add 1 to score or nothing
+        if (correct) //Adds 1 to score
         {
             cout << endl;
             cout << "   ";
@@ -113,7 +113,7 @@ int ratingGame(string movies[], int ratings[], int size)
             cout << endl;
             cout << endl;
         }
-        else 
+        else //Add nothing to score
         {
             cout << endl;
             cout << "   ";
@@ -245,7 +245,7 @@ string calcFeat(char feat) {
     return featWord;
 }
 
-void getMenuChoice(int& menuChoice)
+void getMenuChoice(int& menuChoice) //User input is turned into an enum. From intigers.
 {
     switch (menuChoice)
     {
@@ -299,7 +299,7 @@ int displayMenu() {
     return choice;
 }
 
-// Save the report
+// Save the report to a text file.
 void saveReport(int movies, int diff, string feat, string sound, int score) {
 
     ofstream outFile;
@@ -340,9 +340,10 @@ int main()
 
     bool playedRatingGame = false;
 
-    //Struct Variables
+    //Structs
+    userData progress;
 
-    userData progress; //   progress.movieAmountGuessed   progress.favoriteDinoFeature    progress.imitateDinoSounds    progress.movieMinigameScore
+
 
     // Introduction
     changeColor(10);
