@@ -58,11 +58,6 @@ using namespace std;
 
         taskResults progress;
 
-        bool moviesDone;
-        bool featuresDone;
-        bool soundsDone;
-        bool minigameDone;
-
         int actualMovies;
         int movieDifference;
     };
@@ -74,11 +69,6 @@ using namespace std;
         progress.favoriteDinoFeature = "none";
         progress.imitateDinoSounds = "none";
         progress.movieMinigameScore = 0;
-
-        moviesDone = false;
-        featuresDone = false;
-        soundsDone = false;
-        minigameDone = false;
 
         actualMovies = 7;
         movieDifference = 0;
@@ -124,8 +114,6 @@ using namespace std;
 
         //Returns
         progress.movieAmountGuessed = guess; //Add other returns too and do so for other functions.
-        
-        moviesDone = true;
     }
 
     //Favorite dino feature task
@@ -169,7 +157,6 @@ using namespace std;
 
         //Returns
         progress.favoriteDinoFeature = feature;
-        featuresDone = true;
     }
 
     // Dino Sounds
@@ -198,7 +185,6 @@ using namespace std;
 
         //Returns
         progress.imitateDinoSounds = sound;
-        soundsDone = true;
     }
 
 
@@ -332,7 +318,6 @@ using namespace std;
 
         //return
         progress.movieMinigameScore = score;
-        minigameDone = true;
     }
 
 
@@ -397,7 +382,10 @@ int main()
 {
     // Variables
     int menuChoice = 0;
-
+    bool moviesDone = false;
+    bool featuresDone = false;
+    bool soundsDone = false;
+    bool minigameDone = false;
     
     string movieNames[]{ "Jurassic Park", "The Lost World: Jurassic Park", "Jurassic Park III", "Jurassic World", "Jurassic World: Fallen Kingdom", "Jurassic World: Dominion", "Jurassic World: Rebirth"};
 
@@ -425,40 +413,42 @@ int main()
         case MOVIES:
 
             changeColor(12);
-            //Call function
-
+            tasks.moviesCreated();
+            moviesDone = true;
             break;
 
         case FEATURES:
 
             changeColor(12);
-            //Call function
-
+            tasks.favoriteFeature();
+            featuresDone = true;
             break;
 
         case SOUNDS:
 
             changeColor(12);
-            //Call function
-
+            tasks.makeSound();
+            soundsDone = true;
             break;
 
         case RATINGGAME:
 
             changeColor(15);
-            //Call function
-
+            tasks.ratingGame(movieNames, movieRatings, movieCount);
+            minigameDone = true;
             break;
 
         case VIEW: // Display response table
 
-            if () {//Add a if false conditional
-
+            if (moviesDone != true || featuresDone != true || soundsDone != true || minigameDone != true)
+            {
                 changeColor(4);
                 cout << "\nPlease complete all directory questions first.\n" << endl;
                 break;
             }
-            programTasks::displayResults;
+            else {
+                programTasks::displayResults;
+            }
             break;
 
         case SAVE: // Save response table
