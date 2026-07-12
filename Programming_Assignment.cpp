@@ -1,20 +1,7 @@
-/* 
-ITCS 2530 - Week 08 Assignment
-Deven Shumney
-Andy Rizo
+/* ITCS 2530 - Week 08 Assignment
 
-
-Define a class.
-
-    At least one private data member that stores:
-
-    Meaningful data such as counts, totals, etc.
-
-    At least one constructor which initializes the object to a safe starting state.
-
-    At least three public member functions.
-    
-    You may move some of the already present functions into the class as member functions.
+Owner: Deven Shumney
+Collaborator: Andy Rizo 
 
 */ 
 
@@ -27,7 +14,7 @@ using namespace std;
 
 
 // Enums
-    enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT };//Used for the main menu switch.
+    enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT, INVALID};//Used for the main menu switch.
 
 
 //structs
@@ -220,7 +207,12 @@ using namespace std;
         case 7:
             menuChoice = EXIT;
             break;
+        default:
+            menuChoice = INVALID;
+            break;
+
         }
+
     }
     // Minigame: higher or lower guessing game.
     void programTasks::ratingGame(string movies[], int ratings[], int size)
@@ -359,6 +351,9 @@ using namespace std;
 
         outFile << "------------------------------------------" << endl;
 
+        cout << endl;
+        cout << endl;
+
         outFile.close();
     }
 
@@ -375,6 +370,9 @@ using namespace std;
         cout << left << setw(22) << "Coolest Dino Feature:" << progress.favoriteDinoFeature << endl;
         cout << left << setw(16) << "Dinosaur Sound:" << progress.imitateDinoSounds << endl;
         cout << left << setw(22) << "Rating Game Score:" << progress.movieMinigameScore << "/6" << endl;
+
+        cout << endl;
+        cout << endl;
 
         cout << "------------------------------------------" << endl;
     }
@@ -465,10 +463,13 @@ int main()
             cout << "\nThank you for visiting the Dinosaur Directory!" << endl;
             break;
 
-        default: // Loop for menu when invalid input submitted.
+        case INVALID: // Loop for menu when invalid input submitted.
 
             changeColor(4);
             cout << "\nInvalid choice! Please try again." << endl;
+            cin.clear();
+            cin.ignore(200,'\n');
+            break;
         }
     } while (menuChoice != EXIT);
 
