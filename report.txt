@@ -1,9 +1,9 @@
 ------------------------------------------
               RESPONSE SUMMARY           
 ------------------------------------------
-Movies Guessed: 7
-Guess Difference from Actual: 0
+Movies Guessed: 6
+Guess Difference from Actual: 1
 Coolest Dino Feature: Teeth
-Dinosaur Sound: Rawr
+Dinosaur Sound: Roar
 Rating Game Score:    4/6
 ------------------------------------------

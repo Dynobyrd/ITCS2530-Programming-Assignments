@@ -1,6 +1,10 @@
-// ITCS 2530 - Week 07 Assignment
-// Deven Shumney
-// Andy Rizo (Introduced Structs)
+/* ITCS 2530 - Week 08 Assignment
+
+Owner: Deven Shumney
+Collaborator: Andy Rizo (Added classes)
+
+*/ 
+
 
 #include <iostream>
 #include <iomanip>
@@ -8,329 +12,379 @@
 #include <Windows.h>
 using namespace std;
 
+
 // Enums
-enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT };
+    enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT, INVALID};//Used for the main menu switch.
 
-//Structs
-struct userData {
 
-    int movieAmountGuessed; // For the guess how many movies there are. // 
+//structs
+    struct taskResults // Results/scores of trying the different tasks/minigames.
+    {
+        int movieAmountGuessed;
+        string favoriteDinoFeature;
+        string imitateDinoSounds;
+        int movieMinigameScore;
+    };
 
-    string favoriteDinoFeature;
+//classes
+    class programTasks // Add or change anything if needed
+    {
+    public:
 
-    string imitateDinoSounds;
+        programTasks(); // Constructor and below are functions
 
-    int movieMinigameScore; // For the higher/lower game.
+        void moviesCreated();
+        void favoriteFeature();
+        void makeSound();
+        void ratingGame(string movies[], int ratings[], int size);
 
-};
+        void displayResults();
+        void saveResults();
 
+    private:
+
+        taskResults progress;
+
+        int actualMovies;
+        int movieDifference;
+    };
+
+//Constructors
+    programTasks::programTasks()
+    {
+        progress.movieAmountGuessed = 0;
+        progress.favoriteDinoFeature = "none";
+        progress.imitateDinoSounds = "none";
+        progress.movieMinigameScore = 0;
+
+        actualMovies = 7;
+        movieDifference = 0;
+    }
 
 // Defined functions 
 
-// Change console color - change the color of the text that is printed in console
-void changeColor(int color) {
+    // Change console color - change the color of the text that is printed in console
+    void changeColor(int color) {
 
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-}
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+    }
 
-// Minigame: higher or lower guessing game.
-int ratingGame(string movies[], int ratings[], int size) 
-{
-    //Variables
-    int score = 0;
-    string answer;
+    // Display 
+    void displayIntro() {
 
-    //Start
-    cout << endl;
-    cout << endl;
-    cout << "Guess if the next movie has a HIGHER or LOWER rating.";
-    cout << endl;
-    cout << endl;
+        cout << "Welcome to the Dinosaur Directory!" << endl << endl;
+    }
 
-
-    for (int i = 0; i < size - 1; i++)  //This loop will run 6 times in total
+    // Movies created task
+    void programTasks::moviesCreated()
     {
-        cout << "Does ";
+        int guess;
 
-        changeColor(10);
-        cout << movies[i + 1];
-        changeColor(15);
-
-        cout << " have a higher or lower rating than ";
-
-        changeColor(10);
-        cout << movies[i];
-        changeColor(15);
-        
-        cout << " ???";
-
-        cout << endl;
-        cout << endl;
-        changeColor(10);
-        cout << "Rating to go off of: " << ratings[i] << "/100";
-        changeColor(15);
-
-        do // Do while Error Handler
-        {
-            cout << endl;
-            cout << endl;
-            cout << "Higher or Lower: ";
-            cin >> answer;
-
-            while (answer != "Higher" && answer != "higher" && answer != "Lower" && answer != "lower") 
-            {
-                cout << "Invalid answer. Please enter Higher or Lower.\n";
-                cin >> answer;
-            }
-
-        } while (answer != "Higher" && answer != "higher" && answer != "Lower" && answer != "lower");
-
-
-        bool correct = false; // From here we check the user input to see if its correct or wrong
-
-
-        if (ratings[i + 1] > ratings[i]) 
-        {
-            if ((answer == "Higher") || (answer == "higher")) 
-            {
-                correct = true;
-            }
-        }
-        else 
-        {
-            if ((answer == "Lower") || (answer == "lower")) 
-            {
-                correct = true;
-            }
-        }
-
-        if (correct) //Add 1 to score or nothing
-        {
-            cout << endl;
-            cout << "   ";
-            cout << "Correct!";
-            score++;
-            cout << endl;
-            cout << endl;
-        }
-        else 
-        {
-            cout << endl;
-            cout << "   ";
-            cout << "Incorrect!";
-            cout << endl;
-            cout << endl;
-        }
-    }
-    // After the for loop
-    cout << "Minigame Completed.";
-    cout << endl;
-    cout << "Final Score: " << score << "/" << size - 1 << "";
-    cout << endl;
-    cout << endl;
-
-    return score;
-}
-
-// Display 
-void displayIntro() {
-
-    cout << "Welcome to the Dinosaur Directory!" << endl << endl;
-}
-
-// Movie 
-int movieGuess() {
-
-    int guess;
-    cout << "\nHow many movies are there in the \"Jurassic Park\" series?" << endl;
-    cin >> guess;
-
-    while (guess <= 0) {
-
-        cin.clear();
-        cin.ignore(100, '\n');
-        cout << endl << "Please enter a number > 0." << endl;
+        cout << "\nHow many movies are there in the \"Jurassic Park\" series?" << endl;
         cin >> guess;
-    }
 
-    cout << "\nFind out how close you were at the end!\n" << endl;
-
-    return guess;
-}
-
-char featChoice() {
-
-    char choice;
-    cout << endl << "\nChoose the coolest dinosaur feature: Teeth (T), Feathers (F), Horns (H)" << endl;
-    do {
-
-        cin >> choice;
-
-        if ((choice != 'T') && (choice != 'F') && (choice != 'H')) {
-
+        while (guess <= 0)
+        {
             cin.clear();
             cin.ignore(100, '\n');
-            cout << "\nInvalid response!Please choose from the features above. * CASE SENSITIVE * " << endl;
+            cout << "Please enter a number > 0: ";
+            cin >> guess;
         }
-    } while ((choice != 'T') && (choice != 'F') && (choice != 'H'));
 
-    cout << "\nI think that's a really awesome feature too!\n" << endl;
+        if (guess > actualMovies)
+            movieDifference = guess - actualMovies;
+        else
+            movieDifference = actualMovies - guess;
 
-    return choice;
-}
 
-string makeSound() {
+        cout << "\nFind out how close you were at the end!\n";
 
-    string sound;
-    cout << endl << "\nType out how you think a dinosaur sounds!" << endl;
-    cin >> sound;
+        //Returns
+        progress.movieAmountGuessed = guess; //Add other returns too and do so for other functions.
+    }
 
-    if ((sound == "rawr") || (sound == "roar")) {
+    //Favorite dino feature task
+    void programTasks::favoriteFeature() {
+        string feature;
+        char choice;
+        cout << endl << "\nChoose the coolest dinosaur feature: Teeth (T), Feathers (F), Horns (H)" << endl;
 
-        cout << "\nOh, come now...I know you can do better than that! Try it again!" << endl;
+        //Input for choice with error handler
+        do {    
+            cin >> choice;
+
+            if ((choice != 'T') && (choice != 'F') && (choice != 'H')) {
+
+                cin.clear();
+                cin.ignore(100, '\n');
+                cout << "\nInvalid response!Please choose from the features above. * CASE SENSITIVE * " << endl;
+            }
+        } while ((choice != 'T') && (choice != 'F') && (choice != 'H'));
+
+        //Converts magic letter into a word
+        switch (choice) {
+
+            case 'T':
+                feature = "Teeth";
+                break;
+
+            case 'F':
+                feature = "Feathers";
+                break;
+
+            case 'H':
+                feature = "Horns";
+                break;
+
+            default:
+                feature = "???";
+            }
+
+        cout << "\nI think that's a really awesome feature too!\n" << endl;
+
+        //Returns
+        progress.favoriteDinoFeature = feature;
+    }
+
+    // Dino Sounds
+    void programTasks::makeSound() {
+
+        string sound;
+        cout << endl << "\nType out how you think a dinosaur sounds!" << endl;
         cin >> sound;
-        cout << "\n";
-    }
-    else {
-        cout << "\nOh, how ravenous!\n" << endl;
-    }
 
-    for (int i = 0; i <= 2; i++) {
+        if ((sound == "rawr") || (sound == "roar")) {
 
-        cout << sound << " ";
-    }
+            cout << "\nOh, come now...I know you can do better than that! Try it again!" << endl;
+            cin >> sound;
+            cout << "\n";
+        }
+        else {
+            cout << "\nOh, how ravenous!\n" << endl;
+        }
 
-    cout << "\nAHHHHH, that's horrifying!\n" << endl;
+        for (int i = 0; i <= 2; i++) {
 
-    return sound;
-}
-// Perform calculations
-int calcMovies(int numGuess, int numActual) {
+            cout << sound << " ";
+        }
 
-    int diff;
+        cout << "\nAHHHHH, that's horrifying!\n" << endl;
 
-    if (numGuess > numActual) {
-
-        diff = numGuess - numActual;
-    }
-    else {
-
-        diff = numActual - numGuess;
+        //Returns
+        progress.imitateDinoSounds = sound;
     }
 
-    return diff;
-}
 
-string calcFeat(char feat) {
-
-    string featWord;
-
-    switch (feat) {
-    case 'T':
-        featWord = "Teeth";
-        break;
-
-    case 'F':
-        featWord = "Feathers";
-        break;
-
-    case 'H':
-        featWord = "Horns";
-        break;
-
-    default:
-        featWord = "???";
-    }
-
-    return featWord;
-}
-
-void getMenuChoice(int& menuChoice)
-{
-    switch (menuChoice)
+    //User input of char type is turned into an enum.
+    void getMenuChoice(int& menuChoice) 
     {
-    case 1:
-        menuChoice = MOVIES;
-        break;
+        switch (menuChoice)
+        {
+        case 1:
+            menuChoice = MOVIES;
+            break;
 
-    case 2:
-        menuChoice = FEATURES;
-        break;
+        case 2:
+            menuChoice = FEATURES;
+            break;
 
-    case 3:
-        menuChoice = SOUNDS;
-        break;
+        case 3:
+            menuChoice = SOUNDS;
+            break;
 
-    case 4:
-        menuChoice = RATINGGAME;
-        break;
+        case 4:
+            menuChoice = RATINGGAME;
+            break;
 
-    case 5:
-        menuChoice = VIEW;
-        break;
+        case 5:
+            menuChoice = VIEW;
+            break;
 
-    case 6:
-        menuChoice = SAVE;
-        break;
+        case 6:
+            menuChoice = SAVE;
+            break;
 
-    case 7:
-        menuChoice = EXIT;
-        break;
+        case 7:
+            menuChoice = EXIT;
+            break;
+        default:
+            menuChoice = INVALID;
+            break;
+
+        }
+
     }
-}
+    // Minigame: higher or lower guessing game.
+    void programTasks::ratingGame(string movies[], int ratings[], int size)
+    {
+        int score = 0;
+        string answer;
 
-// Display the menu
-int displayMenu() {
+        cout << endl;
+        cout << endl;
+        cout << "Guess if the next movie has a HIGHER or LOWER rating.";
+        cout << endl;
+        cout << endl;
 
-    int choice;
 
-    cout << "===== MAIN MENU =====\n";
-    cout << "1. Movie Guesses\n";
-    cout << "2. Dinosaur Features\n";
-    cout << "3. Dinosaur Sounds\n";
-    cout << "4. Rating Game\n";
-    cout << "5. View Response Summary\n";
-    cout << "6. Save Response Summary\n";
-    cout << "7. Exit\n";
+        for (int i = 0; i < size - 1; i++)  //This loop will run 6 times in total unless more array entries are added.
+        {
+            cout << "Does ";
 
-    cout << "\nEnter your choice: ";
-    cin >> choice;
+            changeColor(10);
+            cout << movies[i + 1];
+            changeColor(15);
 
-    return choice;
-}
+            cout << " have a higher or lower rating than ";
 
-// Save the report
-void saveReport(int movies, int diff, string feat, string sound, int score) {
+            changeColor(10);
+            cout << movies[i];
+            changeColor(15);
 
-    ofstream outFile;
-    outFile.open("report.txt");
+            cout << " ???";
 
-    outFile << "------------------------------------------\n";
-    outFile << "              RESPONSE SUMMARY           \n";
-    outFile << "------------------------------------------\n";
+            cout << endl;
+            cout << endl;
+            changeColor(10);
+            cout << "Rating to go off of: " << ratings[i] << "/100";
+            changeColor(15);
 
-    outFile << left << setw(16) << "Movies Guessed:" << movies << endl;
-    outFile << left << setw(30) << "Guess Difference from Actual:" << diff << endl;
-    outFile << left << setw(22) << "Coolest Dino Feature:" << feat << endl;
-    outFile << left << setw(16) << "Dinosaur Sound:" << sound << endl;
-    outFile << left << setw(22) << "Rating Game Score:" << score << "/6" << endl;
+            do // Do while to check for invalid inputs.
+            {
+                cout << endl;
+                cout << endl;
+                cout << "Higher or Lower: ";
+                cin >> answer;
 
-    outFile << "------------------------------------------" << endl;
+                while (answer != "Higher" && answer != "higher" && answer != "Lower" && answer != "lower")
+                {
+                    cout << "Invalid answer. Please enter Higher or Lower.\n";
+                    cin >> answer;
+                }
 
-    outFile.close();
-}
+            } while (answer != "Higher" && answer != "higher" && answer != "Lower" && answer != "lower");
+
+
+            bool correct = false; // From here we check the user input to see if its correct or wrong
+
+
+            if (ratings[i + 1] > ratings[i]) //This if else checks to see if one movie has a higher rating than the other and if the user input is correct for either.
+            {
+                if ((answer == "Higher") || (answer == "higher"))
+                {
+                    correct = true;
+                }
+            }
+            else
+            {
+                if ((answer == "Lower") || (answer == "lower"))
+                {
+                    correct = true;
+                }
+            }
+
+            if (correct) //Adds 1 to score
+            {
+                cout << endl;
+                cout << "   ";
+                cout << "Correct!";
+                score++;
+                cout << endl;
+                cout << endl;
+            }
+            else //Add nothing to score
+            {
+                cout << endl;
+                cout << "   ";
+                cout << "Incorrect!";
+                cout << endl;
+                cout << endl;
+            }
+        }
+        // After the for loop
+        cout << "Minigame Completed.";
+        cout << endl;
+        cout << "Final Score: " << score << "/" << size - 1 << "";
+        cout << endl;
+        cout << endl;
+
+        //return
+        progress.movieMinigameScore = score;
+    }
+
+
+    // Display the menu
+    int displayMenu() {
+
+        int choice;
+
+        cout << "===== MAIN MENU =====\n";
+        cout << "1. Movie Guesses\n";
+        cout << "2. Dinosaur Features\n";
+        cout << "3. Dinosaur Sounds\n";
+        cout << "4. Rating Game\n";
+        cout << "5. View Response Summary\n";
+        cout << "6. Save Response Summary\n";
+        cout << "7. Exit\n";
+
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        return choice;
+    }
+
+    // Save the report to a text file.
+    void programTasks::saveResults() {
+
+        ofstream outFile;
+        outFile.open("report.txt");
+
+        outFile << "------------------------------------------\n";
+        outFile << "              RESPONSE SUMMARY           \n";
+        outFile << "------------------------------------------\n";
+
+        outFile << left << setw(16) << "Movies Guessed:" << progress.movieAmountGuessed << endl;
+        outFile << left << setw(30) << "Guess Difference from Actual:" << movieDifference << endl;
+        outFile << left << setw(22) << "Coolest Dino Feature:" << progress.favoriteDinoFeature << endl;
+        outFile << left << setw(16) << "Dinosaur Sound:" << progress.imitateDinoSounds << endl;
+        outFile << left << setw(22) << "Rating Game Score:" << progress.movieMinigameScore << "/6" << endl;
+
+        outFile << "------------------------------------------" << endl;
+
+        cout << endl;
+        cout << endl;
+
+        outFile.close();
+    }
+
+    //Made this into a function instead to show results to clean up the switch.
+    void programTasks::displayResults()
+    {
+        changeColor(10);
+        cout << "\n------------------------------------------\n";
+        cout << "              RESPONSE SUMMARY           \n";
+        cout << "------------------------------------------\n";
+
+        cout << left << setw(16) << "Movies Guessed:" << progress.movieAmountGuessed << endl;
+        cout << left << setw(30) << "Difference from Actual:" << movieDifference << endl;
+        cout << left << setw(22) << "Coolest Dino Feature:" << progress.favoriteDinoFeature << endl;
+        cout << left << setw(16) << "Dinosaur Sound:" << progress.imitateDinoSounds << endl;
+        cout << left << setw(22) << "Rating Game Score:" << progress.movieMinigameScore << "/6" << endl;
+
+        cout << endl;
+        cout << endl;
+
+        cout << "------------------------------------------" << endl;
+    }
 
 int main()
 {
-
-    // Define variables
-    int actMovies = 7;
+    // Variables
     int menuChoice = 0;
-    int movieDiff = 0;
-    char dinoFeat = ' ';
-
-
-    //New Variables + Arrays
+    bool moviesDone = false;
+    bool featuresDone = false;
+    bool soundsDone = false;
+    bool minigameDone = false;
     
     string movieNames[]{ "Jurassic Park", "The Lost World: Jurassic Park", "Jurassic Park III", "Jurassic World", "Jurassic World: Fallen Kingdom", "Jurassic World: Dominion", "Jurassic World: Rebirth"};
 
@@ -338,11 +392,8 @@ int main()
 
     int movieCount = 7;// This one is used for the array length in the for loop
 
-    bool playedRatingGame = false;
+    programTasks tasks;
 
-    //Struct Variables
-
-    userData progress; //   progress.movieAmountGuessed   progress.favoriteDinoFeature    progress.imitateDinoSounds    progress.movieMinigameScore
 
     // Introduction
     changeColor(10);
@@ -358,64 +409,51 @@ int main()
 
         switch (menuChoice) {
 
-        case MOVIES: // Jurassic Park movies, calculate difference
+        case MOVIES:
 
             changeColor(12);
-            progress.movieAmountGuessed = movieGuess();
-            movieDiff = calcMovies(progress.movieAmountGuessed, actMovies);
+            tasks.moviesCreated();
+            moviesDone = true;
             break;
 
-        case FEATURES: // Dinosaur features, calculate full word
+        case FEATURES:
 
             changeColor(12);
-            dinoFeat = featChoice();
-            progress.favoriteDinoFeature = calcFeat(dinoFeat);
+            tasks.favoriteFeature();
+            featuresDone = true;
             break;
 
-        case SOUNDS: // Dinosaur sounds
+        case SOUNDS:
 
             changeColor(12);
-            progress.imitateDinoSounds = makeSound();
+            tasks.makeSound();
+            soundsDone = true;
             break;
 
         case RATINGGAME:
 
             changeColor(15);
-
-            progress.movieMinigameScore = ratingGame(movieNames, movieRatings, movieCount);
-
-            playedRatingGame = true;
-
+            tasks.ratingGame(movieNames, movieRatings, movieCount);
+            minigameDone = true;
             break;
 
         case VIEW: // Display response table
 
-            if ((progress.movieAmountGuessed == 0) || (progress.favoriteDinoFeature == "none") || (progress.imitateDinoSounds == "none") || (playedRatingGame == false)) {
-
+            if (moviesDone != true || featuresDone != true || soundsDone != true || minigameDone != true)
+            {
                 changeColor(4);
                 cout << "\nPlease complete all directory questions first.\n" << endl;
+                break;
             }
             else {
-
-                changeColor(10);
-                cout << "\n------------------------------------------\n";
-                cout << "              RESPONSE SUMMARY           \n";
-                cout << "------------------------------------------\n";
-
-                cout << left << setw(16) << "Movies Guessed:" << progress.movieAmountGuessed << endl;
-                cout << left << setw(30) << "Guess Difference from Actual:" << movieDiff << endl;
-                cout << left << setw(22) << "Coolest Dino Feature:" << progress.favoriteDinoFeature << endl;
-                cout << left << setw(16) << "Dinosaur Sound:" << progress.imitateDinoSounds << endl;
-                cout << left << setw(22) << "Rating Game Score:" << progress.movieMinigameScore << "/6" << endl;
-
-                cout << "------------------------------------------" << endl;
+                tasks.displayResults();
             }
             break;
 
         case SAVE: // Save response table
 
             changeColor(10);
-            saveReport(progress.movieAmountGuessed, movieDiff, progress.favoriteDinoFeature, progress.imitateDinoSounds, progress.movieMinigameScore);
+            tasks.saveResults();
             cout << "\nReport saved!\n" << endl;
             break;
 
@@ -425,12 +463,15 @@ int main()
             cout << "\nThank you for visiting the Dinosaur Directory!" << endl;
             break;
 
-        default: // Loop menu on invalid input
+        case INVALID: // Loop for menu when invalid input submitted.
 
             changeColor(4);
             cout << "\nInvalid choice! Please try again." << endl;
+            cin.clear();
+            cin.ignore(200,'\n');
+            break;
         }
-    } while (menuChoice != EXIT); // Changed to ENUM
+    } while (menuChoice != EXIT);
 
     return 0;
 }
