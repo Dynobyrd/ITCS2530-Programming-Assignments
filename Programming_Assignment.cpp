@@ -1,7 +1,7 @@
 /* ITCS 2530 - Week 08 Assignment
 
 Owner: Deven Shumney
-Collaborator: Andy Rizo 
+Collaborator: Andy Rizo (Added classes)
 
 */ 
 
