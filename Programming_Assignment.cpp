@@ -27,11 +27,11 @@ using namespace std;
 
 
 // Enums
-    enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT };
+    enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT };//Used for the main menu switch.
 
 
 //structs
-    struct taskResults // Results of trying the different tasks/minigames.
+    struct taskResults // Results/scores of trying the different tasks/minigames.
     {
         int movieAmountGuessed;
         string favoriteDinoFeature;
@@ -342,7 +342,7 @@ using namespace std;
     }
 
     // Save the report to a text file.
-    void saveReport(int movies, int diff, string feat, string sound, int score) {
+    void programTasks::saveResults() {
 
         ofstream outFile;
         outFile.open("report.txt");
@@ -351,17 +351,18 @@ using namespace std;
         outFile << "              RESPONSE SUMMARY           \n";
         outFile << "------------------------------------------\n";
 
-        outFile << left << setw(16) << "Movies Guessed:" << movies << endl;
-        outFile << left << setw(30) << "Guess Difference from Actual:" << diff << endl;
-        outFile << left << setw(22) << "Coolest Dino Feature:" << feat << endl;
-        outFile << left << setw(16) << "Dinosaur Sound:" << sound << endl;
-        outFile << left << setw(22) << "Rating Game Score:" << score << "/6" << endl;
+        outFile << left << setw(16) << "Movies Guessed:" << progress.movieAmountGuessed << endl;
+        outFile << left << setw(30) << "Guess Difference from Actual:" << movieDifference << endl;
+        outFile << left << setw(22) << "Coolest Dino Feature:" << progress.favoriteDinoFeature << endl;
+        outFile << left << setw(16) << "Dinosaur Sound:" << progress.imitateDinoSounds << endl;
+        outFile << left << setw(22) << "Rating Game Score:" << progress.movieMinigameScore << "/6" << endl;
 
         outFile << "------------------------------------------" << endl;
 
         outFile.close();
     }
 
+    //Made this into a function instead to show results to clean up the switch.
     void programTasks::displayResults()
     {
         changeColor(10);
@@ -447,14 +448,14 @@ int main()
                 break;
             }
             else {
-                programTasks::displayResults;
+                tasks.displayResults();
             }
             break;
 
         case SAVE: // Save response table
 
             changeColor(10);
-            //Save results
+            tasks.saveResults();
             cout << "\nReport saved!\n" << endl;
             break;
 
