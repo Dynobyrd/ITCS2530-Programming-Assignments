@@ -1,6 +1,6 @@
-// ITCS 2530 - Week 06 Assignment
+// ITCS 2530 - Week 07 Assignment
 // Deven Shumney
-// Andy Rizo (Introduced Enums and Arrays + added a new minigame)
+// Andy Rizo (Introduced Structs)
 
 #include <iostream>
 #include <iomanip>
@@ -8,9 +8,21 @@
 #include <Windows.h>
 using namespace std;
 
-// ENUMERATION FOR MENU CHOICE
+// Enums
 enum menuChoice { MOVIES, FEATURES, SOUNDS, RATINGGAME, VIEW, SAVE, EXIT };
 
+//Structs
+struct userData {
+
+    int movieAmountGuessed; // For the guess how many movies there are. // 
+
+    string favoriteDinoFeature;
+
+    string imitateDinoSounds;
+
+    int movieMinigameScore; // For the higher/lower game.
+
+};
 
 
 // Defined functions 
@@ -313,24 +325,24 @@ int main()
 
     // Define variables
     int actMovies = 7;
-    int dinoMovies = 0;
     int menuChoice = 0;
     int movieDiff = 0;
     char dinoFeat = ' ';
-    string actFeat = "none";
-    string dinoSound = "none";
 
 
     //New Variables + Arrays
-    int ratingScore = 0;
-    bool playedRatingGame = false;
-
+    
     string movieNames[]{ "Jurassic Park", "The Lost World: Jurassic Park", "Jurassic Park III", "Jurassic World", "Jurassic World: Fallen Kingdom", "Jurassic World: Dominion", "Jurassic World: Rebirth"};
 
     int movieRatings[] { 91, 57, 49, 72, 47, 28, 50}; //Each one corresponds to movieNames in order. (Rotten Tomatoe Ratings)
 
     int movieCount = 7;// This one is used for the array length in the for loop
 
+    bool playedRatingGame = false;
+
+    //Struct Variables
+
+    userData progress; //   progress.movieAmountGuessed   progress.favoriteDinoFeature    progress.imitateDinoSounds    progress.movieMinigameScore
 
     // Introduction
     changeColor(10);
@@ -349,28 +361,28 @@ int main()
         case MOVIES: // Jurassic Park movies, calculate difference
 
             changeColor(12);
-            dinoMovies = movieGuess();
-            movieDiff = calcMovies(dinoMovies, actMovies);
+            progress.movieAmountGuessed = movieGuess();
+            movieDiff = calcMovies(progress.movieAmountGuessed, actMovies);
             break;
 
         case FEATURES: // Dinosaur features, calculate full word
 
             changeColor(12);
             dinoFeat = featChoice();
-            actFeat = calcFeat(dinoFeat);
+            progress.favoriteDinoFeature = calcFeat(dinoFeat);
             break;
 
         case SOUNDS: // Dinosaur sounds
 
             changeColor(12);
-            dinoSound = makeSound();
+            progress.imitateDinoSounds = makeSound();
             break;
 
         case RATINGGAME:
 
             changeColor(15);
 
-            ratingScore = ratingGame(movieNames, movieRatings, movieCount);
+            progress.movieMinigameScore = ratingGame(movieNames, movieRatings, movieCount);
 
             playedRatingGame = true;
 
@@ -378,7 +390,7 @@ int main()
 
         case VIEW: // Display response table
 
-            if ((dinoMovies == 0) || (actFeat == "none") || (dinoSound == "none") || (playedRatingGame == false)) {
+            if ((progress.movieAmountGuessed == 0) || (progress.favoriteDinoFeature == "none") || (progress.imitateDinoSounds == "none") || (playedRatingGame == false)) {
 
                 changeColor(4);
                 cout << "\nPlease complete all directory questions first.\n" << endl;
@@ -390,11 +402,11 @@ int main()
                 cout << "              RESPONSE SUMMARY           \n";
                 cout << "------------------------------------------\n";
 
-                cout << left << setw(16) << "Movies Guessed:" << dinoMovies << endl;
+                cout << left << setw(16) << "Movies Guessed:" << progress.movieAmountGuessed << endl;
                 cout << left << setw(30) << "Guess Difference from Actual:" << movieDiff << endl;
-                cout << left << setw(22) << "Coolest Dino Feature:" << actFeat << endl;
-                cout << left << setw(16) << "Dinosaur Sound:" << dinoSound << endl;
-                cout << left << setw(22) << "Rating Game Score:" << ratingScore << "/6" << endl;
+                cout << left << setw(22) << "Coolest Dino Feature:" << progress.favoriteDinoFeature << endl;
+                cout << left << setw(16) << "Dinosaur Sound:" << progress.imitateDinoSounds << endl;
+                cout << left << setw(22) << "Rating Game Score:" << progress.movieMinigameScore << "/6" << endl;
 
                 cout << "------------------------------------------" << endl;
             }
@@ -403,7 +415,7 @@ int main()
         case SAVE: // Save response table
 
             changeColor(10);
-            saveReport(dinoMovies, movieDiff, actFeat, dinoSound, ratingScore);
+            saveReport(progress.movieAmountGuessed, movieDiff, progress.favoriteDinoFeature, progress.imitateDinoSounds, progress.movieMinigameScore);
             cout << "\nReport saved!\n" << endl;
             break;
 
